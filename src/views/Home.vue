@@ -1,36 +1,29 @@
 <template>
 	<div>
-		<div class="py-2 px-5 bg-dark" id="nav">
-			<span class="text-white font-weight-bold">TechWith11</span>
-			<button class="btn btn-primary" @click="openCreateUserModal">Create New User</button>
-		</div>
-		<create-user-modal />
-		<user-table />
+		<nav-bar />
+		<login-modal v-if='isModalLogin'/>
+		<register-modal v-if='isModalRegister'/>
+		<create-request-modal v-if='isModalCreate'/>
 	</div>
 </template>
 
 <script>
-import CreateUserModal from '@/components/CreateUserModal.vue'
-import UserTable from '@/components/UserTable.vue'
+import {mapGetters} from 'vuex'
+import NavBar from '@/components/Navbar.vue'
+import LoginModal from '@/components/LoginModal.vue'
+import RegisterModal from '@/components/RegisterModal.vue'
+import CreateRequestModal from '@/components/CreateRequest.vue'
 
 export default {
 	name: 'Home',
 	components: {
-		'create-user-modal': CreateUserModal,
-		'user-table': UserTable
+		'nav-bar': NavBar,
+		'login-modal': LoginModal,
+		'register-modal': RegisterModal,
+		'create-request-modal': CreateRequestModal
 	},
-	methods: {
-		openCreateUserModal(){
-			window.$('#createUserModal').modal('show')
-		}
-	}
+	computed:{
+        ...mapGetters(['isModalLogin','isModalCreate', 'isModalRegister'])
+    },
 }
 </script>
-
-<style lang="scss" scoped>
-	#nav{
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-	}
-</style>
