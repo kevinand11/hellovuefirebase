@@ -6,7 +6,7 @@
                 <span class="text">{{ request.title }}</span>
                 <div>
                     <span class="votes">{{ request.upvotes }} votes</span>
-                    <i class="fas fa-arrow-up" @click.prevent="upvoteRequest(request.id)"></i>
+                    <i class="fas fa-arrow-up" @click.prevent="upvoteRequest(request['.key'])"></i>
                 </div>
             </li>
         </ul>
