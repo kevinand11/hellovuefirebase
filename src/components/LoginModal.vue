@@ -6,7 +6,8 @@
             <form class="login" @submit.prevent="loginUser">
                 <input type="text" name="email" placeholder="Email" v-model="email">
                 <input type="password" name="password" placeholder="Password" v-model="password">
-                <button @click.prevent="loginUser">Login</button>
+                <button @click.prevent="loginUser">Login with email</button>
+                <button @click.prevent="loginWithGoogle" class="googleSignIn"><i class="fab fa-google"></i> with Google</button>
                 <p class="error">{{ error }}</p>
             </form>
             <div>No account? <a class="switch" @click.prevent="setModalRegister">Register instead</a></div>
@@ -16,7 +17,7 @@
 
 <script>
 import {mapActions} from 'vuex'
-import { auth } from '@/firebase.js'
+import firebase, { auth } from '@/firebase.js'
 
 export default {
     name: "LoginModal",
@@ -37,7 +38,25 @@ export default {
                     this.closeModal()
                 })
                 .catch(error => this.setError(error.message));
+        },
+        loginWithGoogle(){
+            let googleProvider = new firebase.auth.GoogleAuthProvider()
+            auth.signInWithPopup(googleProvider).then(user => {
+                this.setUser(user)
+                this.closeModal()
+            }).catch(error => this.setError(error.message))
         }
     }
 }
 </script>
+
+<style lang="scss">
+    button{
+        display: block;
+        margin: 10px auto;
+    }
+    .googleSignIn{
+        background: #FF3D00;
+        color: #ffffff;
+    }
+</style>
