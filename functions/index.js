@@ -54,3 +54,15 @@ exports.upvote = functions.https.onCall(async (data, context) => {
 	await user.update({ upvotedOn: [...doc.data().upvotedOn, data.id] })
 	return request.update({ upvotes: admin.firestore.FieldValue.increment(1) })
 })
+
+exports.logActivities = functions.firestore.document('/{collection}/{id}').onCreate((snap, context) => {
+	const activities = admin.firestore().collection('activities')
+	const collection = context.params.collection
+	if (collection === 'requests') {
+		return activities.add({ text: 'a new tutorial request was added' })
+	}
+	if (collection === 'users') {
+		return activities.add({ text: 'a new user signed up' })
+	}
+	return null
+})
