@@ -1,12 +1,12 @@
 <template>
-    <section class="content" id="app">
+    <section class="content">
         <h1>Tutorial Requests</h1>
         <ul class="request-list">
             <li v-for="request in requests" :key="request.id">
                 <span class="text">{{ request.title }}</span>
                 <div>
                     <span class="votes">{{ request.upvotes }} votes</span>
-                    <i class="fas fa-arrow-up"></i>
+                    <i class="fas fa-arrow-up" @click.prevent="upvoteRequest(request.id)"></i>
                 </div>
             </li>
         </ul>
@@ -14,13 +14,20 @@
 </template>
 
 <script>
+import {firestore,functions} from '@/firebase.js'
 export default {
     name: "RequestList",
-    data: () => ({
-        requests: [
-            { title: 'Laravel 6 for beginners', upvotes: 4, id: 37 }
-        ]
-    })
+    firestore: () => ({
+        requests: firestore.collection('requests').orderBy('upvotes', 'desc')
+    }),
+    methods: {
+        upvoteRequest(id){
+            const upvote = functions.httpsCallable('upvote');
+            upvote({ id })
+                .then(() => alert('Done'))
+                .catch(error => alert(error.message));
+        }
+    }
 }
 </script>
 
@@ -47,9 +54,5 @@ export default {
 .request-list i{
     cursor: pointer;
     border-radius: 50%;
-}
-.request-list .upvote:active{
-    color: black;
-    background: #ffe100;
 }
 </style>
