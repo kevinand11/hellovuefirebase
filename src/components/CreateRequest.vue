@@ -3,10 +3,10 @@
         <div class="outside" @click="closeModal"></div>
         <div class="modal">
             <h2>Request a Tutorial</h2>
-            <form>
-                <input type="text" name="request" placeholder="Course Title">
-                <button>Submit Request</button>
-                <p class="error"></p>
+            <form @submit="submitRequest">
+                <input type="text" v-model="request" placeholder="Course Title" maxlength="30">
+                <button @click.prevent="submitRequest">Submit Request</button>
+                <p class="error">{{ error }}</p>
             </form>
         </div>
     </div>
@@ -14,11 +14,25 @@
 
 <script>
 import {mapActions} from 'vuex'
+import { functions } from '@/firebase.js'
 
 export default {
     name: "CreateRequest",
+    data: () => ({
+        request: "",
+        error: ""
+    }),
     methods:{
-        ...mapActions(['closeModal'])
+        ...mapActions(['closeModal']),
+        setError(message){
+            this.error = message
+        },
+        submitRequest(){
+            const addRequest = functions.httpsCallable('addRequest');
+            addRequest({ title: this.request })
+            .then(() => this.closeModal())
+            .catch(error => this.setError(error.message));
+        }
     }
 }
 </script>
