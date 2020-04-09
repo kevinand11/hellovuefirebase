@@ -5,6 +5,8 @@ import 'firebase/firestore'
 import 'firebase/auth'
 import 'firebase/functions'
 
+import store from '@/store/'
+
 const config = {
 	apiKey: 'AIzaSyDh7UwuWpmEyoppZdjngmMg-lZ3y9WVcrw',
 	authDomain: 'hellofirebase-67e87.firebaseapp.com',
@@ -23,3 +25,5 @@ export default firebase
 export const firestore = firebase.firestore()
 export const auth = firebase.auth()
 export const functions = firebase.functions()
+
+auth.onAuthStateChanged((user) => store.dispatch('setUser', user ? user : null))

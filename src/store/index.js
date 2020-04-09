@@ -6,13 +6,14 @@ Vue.use(Vuex)
 export default new Vuex.Store({
 	state: {
 		modal: null,
-		user: {},
+		user: null,
 	},
 	getters: {
 		isModalLogin: (state) => state.modal == 'login',
 		isModalRegister: (state) => state.modal == 'register',
 		isModalCreate: (state) => state.modal == 'create',
 		getUser: (state) => state.user,
+		isLoggedIn: (state) => state.user !== null,
 	},
 	mutations: {
 		setModal: (state, mode) => (state.modal = mode),

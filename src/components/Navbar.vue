@@ -2,19 +2,27 @@
     <header>
         <span>TechWith11</span>
         <nav>
-            <a @click.prevent='setModalCreate'>add request</a>
-            <a>sign out</a>
+            <a @click.prevent='setModalCreate'>Add request</a>
+            <a @click.prevent='isLoggedIn ? signOut() : setModalLogin()'>{{ isLoggedIn ? 'Sign out' : 'Login' }}</a>
         </nav>
     </header>
 </template>
 
 <script>
-import {mapActions} from 'vuex'
+import {mapGetters, mapActions} from 'vuex'
+import {auth} from '@/firebase.js'
 
 export default {
     name: "Navbar",
+    computed:{
+        ...mapGetters(['isLoggedIn'])
+    },
     methods:{
-        ...mapActions(['setModalCreate'])
+        ...mapActions(['setModalCreate','setUser','setModalLogin']),
+        signOut(){
+            auth.signOut()
+                .then(() => this.setUser(null));
+        }
     }
 }
 </script>
