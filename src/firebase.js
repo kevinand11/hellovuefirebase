@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueFirestore from 'vue-firestore'
 import firebase from 'firebase/app'
 import 'firebase/firestore'
+import 'firebase/auth'
 import 'firebase/functions'
 
 const config = {
@@ -20,4 +21,5 @@ firebase.initializeApp(config)
 
 export default firebase
 export const firestore = firebase.firestore()
+export const auth = firebase.auth()
 export const functions = firebase.functions()

@@ -3,7 +3,7 @@
         <div class="outside" @click="closeModal"></div>
         <div class="modal">
             <h2>Request a Tutorial</h2>
-            <form @submit="submitRequest">
+            <form @submit.prevent="submitRequest">
                 <input type="text" v-model="request" placeholder="Course Title" maxlength="30">
                 <button @click.prevent="submitRequest">Submit Request</button>
                 <p class="error">{{ error }}</p>
