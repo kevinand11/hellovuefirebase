@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import App from './App.vue'
 import './registerServiceWorker'
-import './config.js'
 import './style/index.scss'
 import router from './router'
 import store from './store'
