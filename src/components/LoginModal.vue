@@ -41,8 +41,8 @@ export default {
         },
         loginWithGoogle(){
             let googleProvider = new firebase.auth.GoogleAuthProvider()
-            auth.signInWithPopup(googleProvider).then(user => {
-                this.setUser(user)
+            auth.signInWithPopup(googleProvider).then(result => {
+                this.setUser(result.user)
                 this.closeModal()
             }).catch(error => this.setError(error.message))
         }

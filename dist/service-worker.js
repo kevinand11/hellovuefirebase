@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/precache-manifest.6dccd47cdbc4883ad6889858f13ebf04.js"
+  "/precache-manifest.cdc83a933adef8404272728cae829531.js"
 );
 
 workbox.core.setCacheNameDetails({prefix: "HelloFirebase"});
