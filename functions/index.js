@@ -32,7 +32,7 @@ exports.addRequest = functions.https.onCall((data, context) => {
 		.firestore()
 		.collection('requests')
 		.add({
-			title: data.text,
+			title: data.title,
 			upvotes: 0,
 		})
 })
